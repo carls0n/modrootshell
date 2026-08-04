@@ -113,4 +113,26 @@ Let's look at the next 20 instructions.
    0xffffffffc29c024b:	cmpw   $0x0,0x2309(%rip)        # 0xffffffffc29c255c
    0xffffffffc29c0253:	je     0xffffffffc29c0360
 ```
+
 Finally, looking at the last cmp in this set of instructions means 6666 in decimal. That's it! kill -63 6666 will reveal the module. Then it can be safely removed.  Don't think I know these things in my head. I used google. Let google help you decode these instructions.
+
+Another way that you could go about this if you have access to the .ko file is:
+
+In this case we've used the default magic number 8000 for signal 63 and this time we have a different address found earlier at the begining of instructions from movabs.
+```
+
+(gdb) add-symbol-file ./modrootshell.ko 0xffffffffa0d22000
+dd symbol table from file "./modrootshell.ko" at
+	.text_addr = 0xffffffffa0d22000
+(y or n) y
+Reading symbols from ./modrootshell.ko...
+pipe disassemble 0xffffffffc1885200, 0xffffffffc1885200+100 | grep "cmp"
+   0xffffffffc1885223:	cmp    $0x40,%eax
+   0xffffffffc1885228:	cmp    $0x7a69,%rdx
+   0xffffffffc1885235:	cmp    $0x3f,%eax
+   0xffffffffc188523e:	cmp    $0x1f40,%rdx
+   0xffffffffc188524b:	cmpw   $0x0,0x2309(%rip)        # 0xffffffffc188755c
+
+The last two "cmp" lines contain 63 and 8000 - the combination to unhiding the kernel module. 
+```
+
