@@ -49,7 +49,7 @@ If the above is what you have, you found it! Pay particular attention to the fir
 
 If you dont have have kcore<br>
 ```
-# ls -l /proc/kcore<br>
+# ls -l /proc/kcore
 ```
 then your kernel was compiled without support for it. Support would require recompiling the kernel but is out of the scope of this text.
 
