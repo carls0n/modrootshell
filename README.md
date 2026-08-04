@@ -39,10 +39,10 @@ At the prompt, type the following, which should give us the first 5 instructions
 ```
 (gdb) x/5i 0xffffffff8fd87790<br>
    0xffffffff8fd87790:	movabs $0xffffffffc07c7200,%rax
-   0xffffffff8fd8779a:	jmp    *%rax<br>
-   0xffffffff8fd8779c:	mov    $0x1,%esi<br>
-   0xffffffff8fd877a1:	push   %rbx<br>
-   0xffffffff8fd877a2:	sub    $0x38,%rsp<br>
+   0xffffffff8fd8779a:	jmp    *%rax
+   0xffffffff8fd8779c:	mov    $0x1,%esi
+   0xffffffff8fd877a1:	push   %rbx
+   0xffffffff8fd877a2:	sub    $0x38,%rsp
 (gdb)
 ```
 If the above is what you have, you found it! Pay particular attention to the first two instructions. This absolutely proves that sys_kill is hooked!<br>
@@ -92,25 +92,25 @@ There is our kill signal to unhide the module that we need so that we can remove
 Let's look at the next 20 instructions.
 ```
 (gdb) x/20i 0xffffffffc29c0200<br>
-   0xffffffffc29c0200:	push   %rbp<br>
-   0xffffffffc29c0201:	mov    %rsp,%rbp<br>
-   0xffffffffc29c0204:	push   %rbx<br>
-   0xffffffffc29c0205:	mov    %rdi,%rbx<br>
-   0xffffffffc29c0208:	sub    $0x18,%rsp<br>
-   0xffffffffc29c020c:	mov    0x70(%rdi),%rdx<br>
-   0xffffffffc29c0210:	mov    %gs:0x28,%rax<br>
-   0xffffffffc29c0219:	mov    %rax,-0x10(%rbp)<br>
-   0xffffffffc29c021d:	xor    %eax,%eax<br>
-   0xffffffffc29c021f:	mov    0x68(%rdi),%rax<br>
-   0xffffffffc29c0223:	cmp    $0x40,%eax<br>
-   0xffffffffc29c0226:	jne    0xffffffffc29c0235<br>
-   0xffffffffc29c0228:	cmp    $0x7a69,%rdx<br>
-   0xffffffffc29c022f:	je     0xffffffffc29c02bc<br>
-   0xffffffffc29c0235:	cmp    $0x7a69,%rdx<br>
-   0xffffffffc29c0238:	jne    0xffffffffc29c02f2<br>
-   0xffffffffc29c023e:	cmp    $0x1a0a,%rdx<br>
-   0xffffffffc29c0245:	jne    0xffffffffc29c02f2<br>
-   0xffffffffc29c024b:	cmpw   $0x0,0x2309(%rip)        # 0xffffffffc29c255c<br>
-   0xffffffffc29c0253:	je     0xffffffffc29c0360<br>
+   0xffffffffc29c0200:	push   %rbp
+   0xffffffffc29c0201:	mov    %rsp,%rbp
+   0xffffffffc29c0204:	push   %rbx
+   0xffffffffc29c0205:	mov    %rdi,%rbx
+   0xffffffffc29c0208:	sub    $0x18,%rsp
+   0xffffffffc29c020c:	mov    0x70(%rdi),%rdx
+   0xffffffffc29c0210:	mov    %gs:0x28,%rax
+   0xffffffffc29c0219:	mov    %rax,-0x10(%rbp)
+   0xffffffffc29c021d:	xor    %eax,%eax
+   0xffffffffc29c021f:	mov    0x68(%rdi),%rax
+   0xffffffffc29c0223:	cmp    $0x40,%eax
+   0xffffffffc29c0226:	jne    0xffffffffc29c0235
+   0xffffffffc29c0228:	cmp    $0x7a69,%rdx
+   0xffffffffc29c022f:	je     0xffffffffc29c02bc
+   0xffffffffc29c0235:	cmp    $0x7a69,%rdx
+   0xffffffffc29c0238:	jne    0xffffffffc29c02f2
+   0xffffffffc29c023e:	cmp    $0x1a0a,%rdx
+   0xffffffffc29c0245:	jne    0xffffffffc29c02f2
+   0xffffffffc29c024b:	cmpw   $0x0,0x2309(%rip)        # 0xffffffffc29c255c
+   0xffffffffc29c0253:	je     0xffffffffc29c0360
 ```
 Finally, looking at the last cmp in this set of instructions means 6666 in decimal. That's it! kill -63 6666 will reveal the module. Then it can be safely removed.  Don't think I know these things in my head. I used google. Let google help you decode these instructions.
