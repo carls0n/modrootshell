@@ -1,4 +1,4 @@
-`A simple LKM which gives a rootshell. Also hides module from /sys/module and /prco/modules as well as kernel tracing files`.<br>
+`A simple LKM which gives a rootshell. Also hides module from /sys/module and /proc/modules as well as kernel tracing files`.<br>
 
 \# `git clone https://github.com/carls0n/modrootshell`<br>
 \# `cd modrootshell`<br>
@@ -58,4 +58,3 @@
 `# ls -l /proc/kcore`<br>
 
 `then your kernel was compiled without support for it. Support would require recompiling the kernel. (out of the scope of this text)`
-
