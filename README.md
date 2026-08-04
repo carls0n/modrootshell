@@ -1,4 +1,3 @@
-`# modrootshell`<br>
 `A simple LKM which gives a rootshell. Also hides module from /sys/module and /prco/modules as well as kernel tracing files`.<br>
 
 \# `git clone https://github.com/carls0n/modrootshell`<br>
