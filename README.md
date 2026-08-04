@@ -25,7 +25,7 @@ Actually, it's quite simple if you just know this one thing. Here we are going t
 # sudo grep -w "__x64_sys_kill" /proc/kallsyms
 ffffffff8fd87790 T __x64_sys_kill
 ```
-Copy the address above, just the first series of letters and nummbers
+Copy the address above, just the first series of letters and numbers
 
 Next, type the following:<br>
 ```
