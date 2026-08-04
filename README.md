@@ -5,7 +5,7 @@ In my paper, <a href="https://carls0n.github.io">defeating LKM and LD_PRELOAD ro
 
 Well...there's more than one way to skin a cat, as they say. There are more options available for hooking sys_kill. In this particular module, we are going to use inline hooking which will use a temporary kprobe registration to locate the non-exported kernel function kallsyms_lookup_name, which then resolves the address of __x64_sys_kill. This method allows us to bypass the ftrace based enabled_functions file. Nothing registered there. Then, we use notrace in our code for our functions, which will successfully hide them from available_filter_functions.<br>
 
-Of course, the module starts out hidden. From both /sys/module and /proc/modules. But if we cant detect this thing in neither /sys/kernel/tracing/enabled functions or /sys/kernel/tracing/available_filter_functions, then how do we find this thing, short of running volatility and looking for it in memory?<br>
+Of course, the module starts out hidden. From both /sys/module and /proc/modules. But if we cant detect this thing in neither /sys/kernel/tracing/enabled_functions or /sys/kernel/tracing/available_filter_functions, then how do we find this thing, short of running volatility and looking for it in memory?<br>
 
 Actually, it's quite simple if you just know this one trick. Here we are going to get the address of __x64_sys_kill:
 
