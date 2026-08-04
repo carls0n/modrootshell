@@ -118,7 +118,7 @@ Finally, looking at the last cmp in this set of instructions means 6666 in decim
 
 Another way that you could go about this if you have access to the .ko file is:
 
-In this case we've used the default magic number 8000 for signal 63
+In this case we've used the default magic number 8000 for signal 63 to unhide the module.
 ```
 sudo grep -w "__x64_sys_kill" /proc/kallsyms
 ffffffffa0d22da0 T __x64_sys_kill
