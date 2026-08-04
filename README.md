@@ -17,7 +17,7 @@
 
 `Of course, the module starts out hidden. From both /sys/module and /proc/modules. You might already be wondering, if we cant detect this module via /sys/kernel/tracing/enabled_functions or /sys/kernel/tracing/available_filter_functions, then how do we find it? Short of running volatility and looking for it in memory?`<br>
 
-`Actually, it's quite simple if you just know this one trick. Here we are going to get the address of __x64_sys_kill:`
+`Actually, it's quite simple if you just know this one thing. Here we are going to get the address of __x64_sys_kill:`
 
 `# sudo grep -w "__x64_sys_kill" /proc/kallsyms`<br>
 `ffffffff8fd87790 T __x64_sys_kill`<br>
