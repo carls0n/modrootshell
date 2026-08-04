@@ -120,6 +120,11 @@ Another way that you could go about this if you have access to the .ko file is:
 
 In this case we've used the default magic number 8000 for signal 63
 ```
+sudo grep -w "__x64_sys_kill" /proc/kallsyms
+ffffffffa0d22da0 T __x64_sys_kill
+
+# sudo gdb --core=/proc/kcore
+
 (gdb) x/5i 0xffffffffa0d22da0
    0xffffffffa0d22da0:	movabs $0xffffffffc1885200,%rax
    0xffffffffa0d22daa:	jmp    *%rax
