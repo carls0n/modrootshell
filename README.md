@@ -1,4 +1,4 @@
-`A simple LKM which gives a rootshell. Also hides module from /sys/module and /proc/modules as well as kernel tracing files`.<br>
+`A simple LKM which gives a rootshell. Also hides module from /sys/module and /proc/modules as well as kernel tracing files.`<br>
 
 \# `git clone https://github.com/carls0n/modrootshell`<br>
 \# `cd modrootshell`<br>
@@ -52,64 +52,61 @@
 `Is it possible since we know the signal to unhide the module is 63, to find the magic number? Yes it is!`<br>
 
 `Let's look at the orginal first 5 instructions for gdb`
-```
-(gdb) x/5i 0xffffffffad922da0`
-   `0xffffffffad922da0:	movabs $0xffffffffc29c0200,%rax`
-   `0xffffffffad922daa:	jmp    *%rax`
-   `0xffffffffad922dac:	add    %eax,(%rax)`
-   `0xffffffffad922dae:	add    %al,(%rax)`
-   `0xffffffffad922db0:	mov    %rsp,%rbp`
 
-   Now, let's look at the address in moveabs
+`(gdb) x/5i 0xffffffffad922da0`<br>
+   `0xffffffffad922da0:	movabs $0xffffffffc29c0200,%rax`<br>
+   `0xffffffffad922daa:	jmp    *%rax`<br>
+   `0xffffffffad922dac:	add    %eax,(%rax)`<br>
+   `0xffffffffad922dae:	add    %al,(%rax)`<br>
+   `0xffffffffad922db0:	mov    %rsp,%rbp`<br>
+
+   `Now, let's look at the address in moveabs`
    
-(gdb) x/15i 0x 0xffffffffc29c0200
+`(gdb) x/15i 0x 0xffffffffc29c0200`
 
-this will show us the next 15 instructions.
+`this will show us the next 15 instructions.`<br>
 
-   0xffffffffc29c0200:	push   %rbp
-   0xffffffffc29c0201:	mov    %rsp,%rbp
-   0xffffffffc29c0204:	push   %rbx
-   0xffffffffc29c0205:	mov    %rdi,%rbx
-   0xffffffffc29c0208:	sub    $0x18,%rsp
-   0xffffffffc29c020c:	mov    0x70(%rdi),%rdx
-   0xffffffffc29c0210:	mov    %gs:0x28,%rax
-   0xffffffffc29c0219:	mov    %rax,-0x10(%rbp)
-   0xffffffffc29c021d:	xor    %eax,%eax
-   0xffffffffc29c021f:	mov    0x68(%rdi),%rax
-   0xffffffffc29c0223:	cmp    $0x40,%eax
-   0xffffffffc29c0226:	jne    0xffffffffc29c0235
-   0xffffffffc29c0228:	cmp    $0x7a69,%rdx
-   0xffffffffc29c022f:	je     0xffffffffc29c02bc
-   0xffffffffc29c0235:	cmp    $0x3f,%eax
+   `0xffffffffc29c0200:	push   %rbp`<br>
+   `0xffffffffc29c0201:	mov    %rsp,%rbp`<br>
+   `0xffffffffc29c0204:	push   %rbx`<br>
+   `0xffffffffc29c0205:	mov    %rdi,%rbx`<br>
+   `0xffffffffc29c0208:	sub    $0x18,%rsp`<br>
+   `0xffffffffc29c020c:	mov    0x70(%rdi),%rdx`<br>
+   `0xffffffffc29c0210:	mov    %gs:0x28,%rax`<br>
+   `0xffffffffc29c0219:	mov    %rax,-0x10(%rbp)`<br>
+   `0xffffffffc29c021d:	xor    %eax,%eax`<br>
+   `0xffffffffc29c021f:	mov    0x68(%rdi),%rax`<br>
+   `0xffffffffc29c0223:	cmp    $0x40,%eax`<br>
+   `0xffffffffc29c0226:	jne    0xffffffffc29c0235`<br>
+   `0xffffffffc29c0228:	cmp    $0x7a69,%rdx`<br>
+   `0xffffffffc29c022f:	je     0xffffffffc29c02bc`<br>
+   `0xffffffffc29c0235:	cmp    $0x3f,%eax`<br>
 
-Look at the cmp instuctions. the first one means 64 in decimal. Theres our kill -64 signal. The next cmp instruction means 31337.
-There is our kill -64 signal and its magic number for getting root. Almost there Lets look at the last cmp instruction. It means 63 in decimal.
+`Look at the cmp instuctions. the first one means 64 in decimal. Theres our kill -64 signal. The next cmp instruction means 31337.
+There is our kill -64 signal and its magic number for getting root. Almost there. Lets look at the last cmp instruction. It means 63 in decimal.
 There is our kill signal to unhide the module that we need so that we can remove it! But whats the magic number?
-Let's look at the next 20 instructions.
+Let's look at the next 20 instructions.`
 
-(gdb) x/20i 0xffffffffc29c0200
-   0xffffffffc29c0200:	push   %rbp
-   0xffffffffc29c0201:	mov    %rsp,%rbp
-   0xffffffffc29c0204:	push   %rbx
-   0xffffffffc29c0205:	mov    %rdi,%rbx
-   0xffffffffc29c0208:	sub    $0x18,%rsp
-   0xffffffffc29c020c:	mov    0x70(%rdi),%rdx
-   0xffffffffc29c0210:	mov    %gs:0x28,%rax
-   0xffffffffc29c0219:	mov    %rax,-0x10(%rbp)
-   0xffffffffc29c021d:	xor    %eax,%eax
-   0xffffffffc29c021f:	mov    0x68(%rdi),%rax
-   0xffffffffc29c0223:	cmp    $0x40,%eax
-   0xffffffffc29c0226:	jne    0xffffffffc29c0235
-   0xffffffffc29c0228:	cmp    $0x7a69,%rdx
-   0xffffffffc29c022f:	je     0xffffffffc29c02bc
-   0xffffffffc29c0235:	cmp    $0x7a69,%rdx
-   0xffffffffc29c0238:	jne    0xffffffffc29c02f2
-   0xffffffffc29c023e:	cmp    $0x1a0a,%rdx
-   0xffffffffc29c0245:	jne    0xffffffffc29c02f2
-   0xffffffffc29c024b:	cmpw   $0x0,0x2309(%rip)        # 0xffffffffc29c255c
-   0xffffffffc29c0253:	je     0xffffffffc29c0360
+`(gdb) x/20i 0xffffffffc29c0200`<br>
+   `0xffffffffc29c0200:	push   %rbp`<br>
+   `0xffffffffc29c0201:	mov    %rsp,%rbp`<br>
+   `0xffffffffc29c0204:	push   %rbx`<br>
+   `0xffffffffc29c0205:	mov    %rdi,%rbx`<br>
+   `0xffffffffc29c0208:	sub    $0x18,%rsp`<br>
+   `0xffffffffc29c020c:	mov    0x70(%rdi),%rdx`<br>
+   `0xffffffffc29c0210:	mov    %gs:0x28,%rax`<br>
+   `0xffffffffc29c0219:	mov    %rax,-0x10(%rbp)`<br>
+   `0xffffffffc29c021d:	xor    %eax,%eax`<br>
+   `0xffffffffc29c021f:	mov    0x68(%rdi),%rax`<br>
+   `0xffffffffc29c0223:	cmp    $0x40,%eax`<br>
+   `0xffffffffc29c0226:	jne    0xffffffffc29c0235`<br>
+   `0xffffffffc29c0228:	cmp    $0x7a69,%rdx`<br>
+   `0xffffffffc29c022f:	je     0xffffffffc29c02bc`<br>
+   `0xffffffffc29c0235:	cmp    $0x7a69,%rdx`<br>
+   `0xffffffffc29c0238:	jne    0xffffffffc29c02f2`<br>
+   `0xffffffffc29c023e:	cmp    $0x1a0a,%rdx`<br>
+   `0xffffffffc29c0245:	jne    0xffffffffc29c02f2`<br>
+   `0xffffffffc29c024b:	cmpw   $0x0,0x2309(%rip)        # 0xffffffffc29c255c`<br>
+   `0xffffffffc29c0253:	je     0xffffffffc29c0360`<br>
 
-Finally, looking at the last cmp in this set of instructions means 6666 in decimal. That's it kill -63 6666 will reveal the module! Don't think I know hat these things mean all in my head. I used google. Let google help you decode these instructions.
-```
-
-
+`Finally, looking at the last cmp in this set of instructions means 6666 in decimal. That's it! kill -63 6666 will reveal the module. Then it can be safely removed.  Don't think I know these things in my head. I used google. Let google help you decode these instructions.`
