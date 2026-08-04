@@ -43,16 +43,8 @@
 `(gdb)`
 
 `If the above is what you have, you found it! This absolutely proves that sys_kill is hooked!`<br>
-
-`Heres what it SHOULD look like:`
-
-   `0xffffffff8fd87790:	endbr64`<br>
-   `0xffffffff8fd87794:	call   0xffffffffc07d8000`<br>
-   `0xffffffff8fd87799:	push   %rbp`<br>
-   `0xffffffff8fd8779a:	xor    %edx,%edx`<br>
-  ` 0xffffffff8fd8779c:	mov    $0x1,%esi`
-(gdb) `<br>
-
+`This is the signature of this particular module. Other modules that use a similar pattern may have similar signatures, but this one belongs to modrootshell.`<br>
+`
 `If you dont have have kcore`<br>
 
 `# ls -l /proc/kcore`<br>
