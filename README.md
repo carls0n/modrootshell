@@ -57,5 +57,5 @@
 
 `# ls -l /proc/kcore`<br>
 
-`then your kernel may have been compiled without support for it. Support would require recompiling the kernel (out fo the scope of this text)`
+`then your kernel was compiled without support for it. Support would require recompiling the kernel. (out of the scope of this text)`
 
