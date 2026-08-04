@@ -47,9 +47,9 @@ If you dont have have kcore
 
 then you will need to download and extract the vmlinuz binary
 
-\# wget https://raw.githubusercontent.com/torvalds/linux/master/scripts/extract-vmlinux
-\# chmod +x extract-vmlinux
-\# ./extract-vmlinux /boot/vmlinuz-$(uname -r) > vmlinux
+\# wget https://raw.githubusercontent.com/torvalds/linux/master/scripts/extract-vmlinux<br>
+\# chmod +x extract-vmlinux<br>
+\# ./extract-vmlinux /boot/vmlinuz-$(uname -r) > vmlinux<br><br>
 
 if symbols look corrupted or mismatched, calculate the live offset
 
