@@ -4,7 +4,6 @@
 \# `cd modrootshell`<br>
 \# `make`<br>
 \# `sudo insmod modrootshell`<br><br>
-`kill -63 8000 [user defined number in source code] toggles module unhide/hide`<br>
 `kill -64 31337 [user defined number in source code] gives a rootshell`<br>
 
 `Must have module unhidden to uninstall`<br><br>
