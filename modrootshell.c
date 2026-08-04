@@ -18,7 +18,7 @@
 #define GET_ROOT   31337
 
 MODULE_LICENSE("GPL");
-MODULE_AUTHOR("Research Implementation");
+MODULE_AUTHOR("Rootkit Research Implementation");
 MODULE_DESCRIPTION("Remapped Inline Hook Signal Hijacker");
 
 /* Forward declaration to fix compiler warnings */
