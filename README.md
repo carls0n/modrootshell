@@ -57,7 +57,7 @@ then your kernel was compiled without support for it. Support would require reco
 
 Let's look at the orginal first 5 instructions for gdb
 ```
-(gdb) x/5i 0xffffffffad922da0<br>
+(gdb) x/5i 0xffffffffad922da0
    0xffffffffad922da0:	movabs $0xffffffffc29c0200,%rax
    0xffffffffad922daa:	jmp    *%rax
    0xffffffffad922dac:	add    %eax,(%rax)
