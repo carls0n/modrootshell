@@ -34,7 +34,6 @@
 `At the prompt, type the following, which should give us the first 5 instructions starting at this address. Using the address we got from kallsyms for __x64_sys_kill. Just put an 0x in front of it.` `That tells gdb that the address is going to be in hexadecimal format.`<br>
 
 `(gdb) x/5i 0xffffffff8fd87790`<br>
-
    `0xffffffff8fd87790:	movabs $0xffffffffc07c7200,%rax`<br>
    `0xffffffff8fd8779a:	jmp    *%rax`<br>
    `0xffffffff8fd8779c:	mov    $0x1,%esi`<br>
@@ -42,11 +41,75 @@
    `0xffffffff8fd877a2:	sub    $0x38,%rsp`<br>
 `(gdb)`
 
-`If the above is what you have, you found it! This absolutely proves that sys_kill is hooked!`<br>
-`This is the signature of this particular module. Other modules that use a similar pattern may have similar signatures, but this one belongs to modrootshell.`<br>
+`If the above is what you have, you found it! Pay particular attention to the first two instructions. This absolutely proves that sys_kill is hooked!`<br>
 
 `If you dont have have kcore`<br>
 
 `# ls -l /proc/kcore`<br>
 
 `then your kernel was compiled without support for it. Support would require recompiling the kernel but is out of the scope of this text.`
+
+`Is it possible since we know the signal to unhide the module is 63, to find the magic number? Yes it is!`<br>
+
+`Let's look at the orginal first 5 instructions for gdb`
+```
+(gdb) x/5i 0xffffffffad922da0`
+   `0xffffffffad922da0:	movabs $0xffffffffc29c0200,%rax`
+   `0xffffffffad922daa:	jmp    *%rax`
+   `0xffffffffad922dac:	add    %eax,(%rax)`
+   `0xffffffffad922dae:	add    %al,(%rax)`
+   `0xffffffffad922db0:	mov    %rsp,%rbp`
+
+   Now, let's look at the address in moveabs
+   
+(gdb) x/15i 0x 0xffffffffc29c0200
+
+this will show us the next 15 instructions.
+
+   0xffffffffc29c0200:	push   %rbp
+   0xffffffffc29c0201:	mov    %rsp,%rbp
+   0xffffffffc29c0204:	push   %rbx
+   0xffffffffc29c0205:	mov    %rdi,%rbx
+   0xffffffffc29c0208:	sub    $0x18,%rsp
+   0xffffffffc29c020c:	mov    0x70(%rdi),%rdx
+   0xffffffffc29c0210:	mov    %gs:0x28,%rax
+   0xffffffffc29c0219:	mov    %rax,-0x10(%rbp)
+   0xffffffffc29c021d:	xor    %eax,%eax
+   0xffffffffc29c021f:	mov    0x68(%rdi),%rax
+   0xffffffffc29c0223:	cmp    $0x40,%eax
+   0xffffffffc29c0226:	jne    0xffffffffc29c0235
+   0xffffffffc29c0228:	cmp    $0x7a69,%rdx
+   0xffffffffc29c022f:	je     0xffffffffc29c02bc
+   0xffffffffc29c0235:	cmp    $0x3f,%eax
+
+Look at the cmp instuctions. the first one means 64 in decimal. Theres our kill -64 signal. The next cmp instruction means 31337.
+There is our kill -64 signal and its magic number for getting root. Almost there Lets look at the last cmp instruction. It means 63 in decimal.
+There is our kill signal to unhide the module that we need so that we can remove it! But whats the magic number?
+Let's look at the next 20 instructions.
+
+(gdb) x/20i 0xffffffffc29c0200
+   0xffffffffc29c0200:	push   %rbp
+   0xffffffffc29c0201:	mov    %rsp,%rbp
+   0xffffffffc29c0204:	push   %rbx
+   0xffffffffc29c0205:	mov    %rdi,%rbx
+   0xffffffffc29c0208:	sub    $0x18,%rsp
+   0xffffffffc29c020c:	mov    0x70(%rdi),%rdx
+   0xffffffffc29c0210:	mov    %gs:0x28,%rax
+   0xffffffffc29c0219:	mov    %rax,-0x10(%rbp)
+   0xffffffffc29c021d:	xor    %eax,%eax
+   0xffffffffc29c021f:	mov    0x68(%rdi),%rax
+   0xffffffffc29c0223:	cmp    $0x40,%eax
+   0xffffffffc29c0226:	jne    0xffffffffc29c0235
+   0xffffffffc29c0228:	cmp    $0x7a69,%rdx
+   0xffffffffc29c022f:	je     0xffffffffc29c02bc
+   0xffffffffc29c0235:	cmp    $0x7a69,%rdx
+   0xffffffffc29c0238:	jne    0xffffffffc29c02f2
+   0xffffffffc29c023e:	cmp    $0x1a0a,%rdx
+   0xffffffffc29c0245:	jne    0xffffffffc29c02f2
+   0xffffffffc29c024b:	cmpw   $0x0,0x2309(%rip)        # 0xffffffffc29c255c
+   0xffffffffc29c0253:	je     0xffffffffc29c0360
+
+Finally, looking at the last cmp in this set of instructions means 6666 in decimal. That's it kill -63 6666 will reveal the module! Don't think I know hat these things mean all in my head. I used google. Let google help you decode these instructions.
+```
+
+
