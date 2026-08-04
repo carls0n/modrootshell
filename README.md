@@ -64,7 +64,7 @@ Let's look at the orginal first 5 instructions for gdb
    0xffffffffad922dae:	add    %al,(%rax)
    0xffffffffad922db0:	mov    %rsp,%rbp
 ```
-   Now, let's look at the address in moveabs
+   Now, let's look at the address in movabs
   ``` 
 (gdb) x/15i 0x 0xffffffffc29c0200
 ```
