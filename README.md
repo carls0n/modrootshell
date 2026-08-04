@@ -136,7 +136,6 @@ Reading symbols from ./modrootshell.ko...
    0xffffffffc1885228 <modrootshell_exit+24>:	cmp    $0x7a69,%rdx
    0xffffffffc1885235 <modrootshell_exit+37>:	cmp    $0x3f,%eax
    0xffffffffc188523e <modrootshell_exit+46>:	cmp    $0x1f40,%rdx
-   0xffffffffc188524b <modrootshell_init+59>:	cmpw   $0x0,0x2309(%rip)        # 0xffffffffc188755c
 
 ```
 The last two "cmp" lines contain 63 and 8000 - the combination to unhiding the kernel module. 
