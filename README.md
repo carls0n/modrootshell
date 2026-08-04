@@ -118,19 +118,26 @@ Finally, looking at the last cmp in this set of instructions means 6666 in decim
 
 Another way that you could go about this if you have access to the .ko file is:
 
-In this case we've used the default magic number 8000 for signal 63 and this time we have a different address found earlier at the begining of instructions from movabs.
+In this case we've used the default magic number 8000 for signal 63
 ```
-(gdb) add-symbol-file ./modrootshell.ko 0xffffffffa0d22000
-dd symbol table from file "./modrootshell.ko" at
-	.text_addr = 0xffffffffa0d22000
+(gdb) x/5i 0xffffffffa0d22da0
+   0xffffffffa0d22da0:	movabs $0xffffffffc1885200,%rax
+   0xffffffffa0d22daa:	jmp    *%rax
+   0xffffffffa0d22dac:	add    %eax,(%rax)
+   0xffffffffa0d22dae:	add    %al,(%rax)
+   0xffffffffa0d22db0:	mov    %rsp,%rbp
+(gdb) add-symbol-file ./modrootshell.ko 0xffffffffc1885200
+add symbol table from file "./modrootshell.ko" at
+	.text_addr = 0xffffffffc1885200
 (y or n) y
 Reading symbols from ./modrootshell.ko...
-pipe disassemble 0xffffffffc1885200, 0xffffffffc1885200+100 | grep "cmp"
-   0xffffffffc1885223:	cmp    $0x40,%eax
-   0xffffffffc1885228:	cmp    $0x7a69,%rdx
-   0xffffffffc1885235:	cmp    $0x3f,%eax
-   0xffffffffc188523e:	cmp    $0x1f40,%rdx
-   0xffffffffc188524b:	cmpw   $0x0,0x2309(%rip)        # 0xffffffffc188755c
+(gdb) pipe disassemble 0xffffffffc1885200, 0xffffffffc1885200+100 | grep "cmp"
+   0xffffffffc1885223 <modrootshell_exit+19>:	cmp    $0x40,%eax
+   0xffffffffc1885228 <modrootshell_exit+24>:	cmp    $0x7a69,%rdx
+   0xffffffffc1885235 <modrootshell_exit+37>:	cmp    $0x3f,%eax
+   0xffffffffc188523e <modrootshell_exit+46>:	cmp    $0x1f40,%rdx
+   0xffffffffc188524b <modrootshell_init+59>:	cmpw   $0x0,0x2309(%rip)        # 0xffffffffc188755c
+
 ```
 The last two "cmp" lines contain 63 and 8000 - the combination to unhiding the kernel module. 
 
