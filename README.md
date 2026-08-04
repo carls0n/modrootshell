@@ -53,7 +53,7 @@ If you dont have have kcore<br>
 ```
 then your kernel was compiled without support for it. Support would require recompiling the kernel but is out of the scope of this text.
 
-#### Is it possible to get the kill signal and the magic number? Yes it is!<br>
+#### Is it possible to get the kill signal and the magic number to unhide the module? Yes it is!<br>
 
 Let's look at the orginal first 5 instructions for gdb
 ```
