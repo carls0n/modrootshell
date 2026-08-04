@@ -91,7 +91,7 @@ There is our kill -64 signal and its magic number for getting root. Almost there
 There is our kill signal to unhide the module that we need so that we can remove it! But whats the magic number?
 Let's look at the next 20 instructions.
 ```
-(gdb) x/20i 0xffffffffc29c0200<br>
+(gdb) x/20i 0xffffffffc29c0200
    0xffffffffc29c0200:	push   %rbp
    0xffffffffc29c0201:	mov    %rsp,%rbp
    0xffffffffc29c0204:	push   %rbx
