@@ -11,7 +11,7 @@
 `# sudo rmmod modrootshell`
 
 ---
-`In my paper, 'defeating LKM and LD_PRELOAD rootkits for fun and profit' [https://carls0n.github.io], I talked about the impossibility of using ftrace or even kprobes for your LKM and not registering under /sys/kernel/tracing/enabled_functions. Even if we used kprobes and notrace in our code, we could make the registrations under available_filter_functions vanish, hooking sys_kill via kprobes still uses the ftrace backend, which is going to register SOMETHING in enabled_functions.`<br>
+`In my paper, 'defeating LKM and LD_PRELOAD rootkits for fun and profit' [https://carls0n.github.io], I talked about the impossibility of using ftrace or even kprobes for your LKM and not registering under /sys/kernel/tracing/enabled_functions. Even if we used kprobes and notrace in our code, we could make the registrations under available_filter_functions vanish, but hooking sys_kill via kprobes still uses the ftrace backend, which is going to register SOMETHING in enabled_functions.`<br>
 
 `Well...there's more than one way to skin a cat, as they say. There are more options available for hooking sys_kill. In this module, in order to hook sys_kill, this module registers a temporary kprobe to locate the non-exported kallsyms_lookup_name function. Once we extract its address, the kprobe is immediately unregistered. We then use kallsyms_lookup_name to resolve the memory address of __x64_sys_kill and deploy our inline hook. This method allows us to bypass the ftrace based enabled_functions file. Nothing registered there. Then, we use notrace in our code for our functions, which will successfully hide them from available_filter_functions.`<br>
 
