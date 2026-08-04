@@ -1,4 +1,4 @@
-A simple LKM which gives a rootshell. Also hides module from /sys/module and /proc/modules as well as kernel tracing files.<br>
+#### A simple LKM which gives a rootshell. Also hides module from /sys/module and /proc/modules as well as kernel tracing files.<br>
 
 ```
 # git clone https://github.com/carls0n/modrootshell
@@ -53,7 +53,7 @@ If you dont have have kcore<br>
 ```
 then your kernel was compiled without support for it. Support would require recompiling the kernel but is out of the scope of this text.
 
-Is it possible since we know the signal to unhide the module is 63, to find the magic number? Yes it is!<br>
+#### Is it possible since we know the signal to unhide the module is 63, to find the magic number? Yes it is!<br>
 
 Let's look at the orginal first 5 instructions for gdb
 ```
