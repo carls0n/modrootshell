@@ -44,7 +44,7 @@
 
 `If the above is what you have, you found it! This absolutely proves that sys_kill is hooked!`<br>
 `This is the signature of this particular module. Other modules that use a similar pattern may have similar signatures, but this one belongs to modrootshell.`<br>
-`
+
 `If you dont have have kcore`<br>
 
 `# ls -l /proc/kcore`<br>
