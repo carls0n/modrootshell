@@ -42,7 +42,7 @@
    `0xffffffff8fd877a2:	sub    $0x38,%rsp`<br>
 `(gdb)`
 
-`If this is what you have, you found it! This absolutely proves that sys_kill is hooked!`<br>
+`If the above is what you have, you found it! This absolutely proves that sys_kill is hooked!`<br>
 
 `Heres what it SHOULD look like:`
 
