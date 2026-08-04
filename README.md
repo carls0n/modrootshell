@@ -64,7 +64,7 @@ Let's look at the orginal first 5 instructions for gdb
    0xffffffffad922dae:	add    %al,(%rax)
    0xffffffffad922db0:	mov    %rsp,%rbp
 ```
-   Now, let's look at the address in movabs
+   Now, let's look at the address next to  movabs
   ``` 
 (gdb) x/15i 0x 0xffffffffc29c0200
 ```
@@ -116,6 +116,7 @@ Let's look at the next 20 instructions.
 
 Finally, looking at the last cmp in this set of instructions means 6666 in decimal. That's it! kill -63 6666 will reveal the module. Then it can be safely removed.  Don't think I know these things in my head. I used google. Let google help you decode these instructions.
 
+---
 Another way that you could go about this if you have access to the .ko file is:
 
 In this case we've used the default magic number 8000 for signal 63 to unhide the module.
