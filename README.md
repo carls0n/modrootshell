@@ -120,7 +120,6 @@ Another way that you could go about this if you have access to the .ko file is:
 
 In this case we've used the default magic number 8000 for signal 63 and this time we have a different address found earlier at the begining of instructions from movabs.
 ```
-
 (gdb) add-symbol-file ./modrootshell.ko 0xffffffffa0d22000
 dd symbol table from file "./modrootshell.ko" at
 	.text_addr = 0xffffffffa0d22000
@@ -132,7 +131,7 @@ pipe disassemble 0xffffffffc1885200, 0xffffffffc1885200+100 | grep "cmp"
    0xffffffffc1885235:	cmp    $0x3f,%eax
    0xffffffffc188523e:	cmp    $0x1f40,%rdx
    0xffffffffc188524b:	cmpw   $0x0,0x2309(%rip)        # 0xffffffffc188755c
-
-The last two "cmp" lines contain 63 and 8000 - the combination to unhiding the kernel module. 
 ```
+The last two "cmp" lines contain 63 and 8000 - the combination to unhiding the kernel module. 
+
 
