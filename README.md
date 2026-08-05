@@ -67,13 +67,7 @@ Now, lets look for cmp instructions at the address found above.
    ```
 Look at the third cmp instruction. the decimal of 0x3f,%edx is 63. The next cmp instruction is 0x1f40,%rcx, which is 8000. This is our kill signal and magic number to unhide the module so that we can remove it! The frst and second cmp instruction represent 64 and 31337. Kill signal and magic number to become root.
 
-If you dont have have kcore<br>
-```
-# ls -l /proc/kcore
-```
-then your kernel was compiled without support for it. Support would require recompiling the kernel but is out of the scope of this text.
-
-Wanna make this super easy and super fast?
+If you have access to the .ko file, you can simply run the following:
 ```
 # objdump -d ./modrootshell.ko | grep -E "(cmp)"
  223:	83 f8 40             	cmp    $0x40,%eax
@@ -83,4 +77,9 @@ Wanna make this super easy and super fast?
 ```
 Don't even need to run gdb! In fact all you need is the .ko file (if you have access to it.) Have fun!
 
+If you dont have have kcore<br>
+```
+# ls -l /proc/kcore
+```
+then your kernel was compiled without support for it. Support would require recompiling the kernel but is out of the scope of this text.
 
