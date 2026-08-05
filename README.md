@@ -145,4 +145,14 @@ Reading symbols from ./modrootshell.ko...
 ```
 The last two "cmp" lines contain 63 and 8000 - the combination to unhiding the kernel module. 
 
+Wanna make this super easy and super fast?
+```
+# objdump -d ./modrootshell.ko | grep -Ew "(cmp)"
+ 223:	83 f8 40             	cmp    $0x40,%eax
+ 228:	48 81 fa 69 7a 00 00 	cmp    $0x7a69,%rdx
+ 235:	83 f8 3f             	cmp    $0x3f,%eax
+ 23e:	48 81 fa 40 1f 00 00 	cmp    $0x1f40,%rdx
+```
+Don't even need to run gdb! In fact all you need is the .ko file (if you have access to it.) Have fun!
+
 
