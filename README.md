@@ -47,19 +47,12 @@ If the above is what you have, you found it! Pay particular attention to the fir
 
 Now, lets look for cmp instructions at the address found above.
 ```
-(gdb) pipe x/50i 0xffffffffc04a1200 | grep cmp
+(gdb) pipe x/15i 0xffffffffc04a1200 | grep cmp
    0xffffffffc04a1220:	cmp    $0x40,%edx
    0xffffffffc04a1225:	cmp    $0x7a69,%rcx
    0xffffffffc04a1232:	cmp    $0x3f,%edx
    0xffffffffc04a123b:	cmp    $0x1f40,%rcx
-   0xffffffffc04a1248:	cmpw   $0x0,0x257df4(%rip)        # 0xffffffffc06f9044
-   0xffffffffc04a1260:	cmp    0x8(%rdx),%rsi
-   0xffffffffc04a126a:	cmp    $0xffffffffc06f90c8,%rsi
-   0xffffffffc04a1277:	cmp    $0xffffffffc06f90c8,%rdx
-   0xffffffffc04a12b0:	cmp    0x8(%rdx),%rsi
-   0xffffffffc04a12ba:	cmp    $0xffffffffc06f9130,%rsi
-   0xffffffffc04a12c7:	cmp    $0xffffffffc06f9130,%rdx
-   (gdb)
+(gdb)
    ```
 Look at the third cmp instruction. The decimal of 0x3f is 63. The next cmp instruction is 0x1f40, which is 8000. This is our kill signal and magic number to unhide the module so that we can remove it! The first and second cmp instruction represent 64 and 31337. Kill signal and magic number to become root.
 
