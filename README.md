@@ -1,4 +1,6 @@
-#### A simple LKM which gives a rootshell. Also hides module from /sys/module and /proc/modules as well as kernel tracing files.<br>
+#### A simple kernel module that gives user a rootshell. 
+
+Hides module from /sys/module and /proc/modules, /proc/kallsyms as well as kernel tracing files.<br>
 
 ```
 # git clone https://github.com/carls0n/modrootshell
