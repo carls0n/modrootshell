@@ -153,6 +153,6 @@ Wanna make this super easy and super fast?
  235:	83 f8 3f             	cmp    $0x3f,%eax
  23e:	48 81 fa 40 1f 00 00 	cmp    $0x1f40,%rdx
 ```
-Don't even need to run gdb! In fact all you need is the .ko file (if you have access to it.) Have fun!
+Don't even need to run gdb! In fact all you need is the .ko file (if you have access to it.) In some cases, dropping the -w might help. Have fun!
 
 
