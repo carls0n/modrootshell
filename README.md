@@ -65,7 +65,7 @@ Now, lets look for cmp instructions at the address found above.
    0xffffffffc04a12c7:	cmp    $0xffffffffc06f9130,%rdx
    (gdb)
    ```
-Look at the third cmp instruction. the decimal of 0x3f,%edx is 63. The next cmp instruction is 0x1f40,%rcx, which is 8000. This is our kill signal and magic number to unhide the module so that we can remove it! The frst and second cmp instruction represent 64 and 31337. Kill signal and maguc number to become root.
+Look at the third cmp instruction. the decimal of 0x3f,%edx is 63. The next cmp instruction is 0x1f40,%rcx, which is 8000. This is our kill signal and magic number to unhide the module so that we can remove it! The frst and second cmp instruction represent 64 and 31337. Kill signal and magic number to become root.
 
 If you dont have have kcore<br>
 ```
