@@ -58,7 +58,7 @@ Look at the third cmp instruction. The decimal of 0x3f is 63. The next cmp instr
 
 If you have access to the .ko file, you can simply run the following:
 ```
-# objdump -d ./modrootshell.ko | grep -E "(cmp)"
+# objdump -d ./modrootshell.ko | grep -E cmp
  223:	83 f8 40             	cmp    $0x40,%eax
  228:	48 81 fa 69 7a 00 00 	cmp    $0x7a69,%rdx
  235:	83 f8 3f             	cmp    $0x3f,%eax
