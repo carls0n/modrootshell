@@ -56,7 +56,7 @@ Now, lets look for cmp instructions at the address found above.
    ```
 Look at the third cmp instruction. The decimal of 0x3f is 63. The next cmp instruction is 0x1f40, which is 8000. This is our kill signal and magic number to unhide the module so that we can remove it! The first and second cmp instructions represent 64 and 31337. Kill signal and magic number to get a rootshell.
 
-If you need to convert the hexadecimal to decimal, it's simple.
+If you need to convert the hexadecimal to decimal, it's simple. (p as in print, d as in decimal)
 ```
 (gdb) p/d 0x3f
 $1 = 63
@@ -69,7 +69,7 @@ So, after finding and executing the kill signal and magic number,
 kill -63 8000
 ```
 
-Look at lsmod. The newly revealed module should be at the top of list. Remove it using:
+Look at lsmod. The newly revealed module should be at the top of the list. Remove it using:
 ```
 sudo rmmod module_name
 ```
