@@ -56,6 +56,11 @@ Now, lets look for cmp instructions at the address found above.
    ```
 Look at the third cmp instruction. The decimal of 0x3f is 63. The next cmp instruction is 0x1f40, which is 8000. This is our kill signal and magic number to unhide the module so that we can remove it! The first and second cmp instructions represent 64 and 31337. Kill signal and magic number to get a rootshell.
 
+If you need to convert the assembly instructions to binary, it's simple.
+```
+(gdb) p/d 0x3f
+$1 = 63
+```
 If you have access to the .ko file, you can simply run the following:
 ```
 # objdump -d ./modrootshell.ko | grep -E cmp
