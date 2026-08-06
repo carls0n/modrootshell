@@ -64,6 +64,8 @@ $1 = 63
 $2 = 8000
 (gdb)
 ```
+So, after finding and executing the kill signal and magic number (kill -63 8000), look at lsmod. The newly revealed module should be at the top of list.
+
 If you have access to the .ko file, you can simply run the following:
 ```
 # objdump -d ./modrootshell.ko | grep -E cmp
