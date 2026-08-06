@@ -69,7 +69,7 @@ So, after finding and executing the kill signal and magic number,
 kill -63 8000
 ```
 
-Look at lsmod. The newly revealed module should be at the top of list. The remove it using
+Look at lsmod. The newly revealed module should be at the top of list. Remove it using:
 ```
 sudo rmmod module_name
 ```
