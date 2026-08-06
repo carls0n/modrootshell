@@ -33,7 +33,7 @@ Next, type the following:<br>
 ```
 # sudo gdb --core=/proc/kcore
 ```
-At the prompt, type the following, which should give us the first 5 instructions starting at this address. Using the address we got from kallsyms for __x64_sys_kill. Just put an 0x in front of it. That tells gdb that the address is going to be in hexadecimal format.<br>
+At the prompt, type the following, which should give us the first 5 instructions starting at the address we got from kallsyms for __x64_sys_kill. Just put an 0x in front of it. That tells gdb that the address is going to be in hexadecimal format.<br>
 ```
 (gdb) x/5i 0xffffffff8fd87790
    0xffffffff8fd87790:	movabs $0xffffffffc04a1200,%rax
