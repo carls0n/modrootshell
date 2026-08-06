@@ -60,6 +60,9 @@ If you need to convert the assembly instructions to decimal, it's simple.
 ```
 (gdb) p/d 0x3f
 $1 = 63
+(gdb) p/d 0x1f40
+$2 = 8000
+(gdb)
 ```
 If you have access to the .ko file, you can simply run the following:
 ```
