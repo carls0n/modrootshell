@@ -1,6 +1,6 @@
 #### A simple kernel module that gives user a rootshell. 
 
-Hides module from /sys/module and /proc/modules, /proc/kallsyms as well as kernel tracing files.<br>
+Hides module from /sys/module and /proc/modules as well as kernel tracing files.<br>
 
 ```
 # git clone https://github.com/carls0n/modrootshell
