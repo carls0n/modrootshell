@@ -24,7 +24,7 @@ Of course, the module starts out hidden. From both /sys/module and /proc/modules
 
 Actually, it's quite simple if you just know this one thing. Here we are going to get the address of __x64_sys_kill:
 ```
-# sudo grep __x64_sys_kill /proc/kallsyms
+# sudo grep -w "__x64_sys_kill" /proc/kallsyms
 ffffffff8fd87790 T __x64_sys_kill
 ```
 Copy the address above, just the first series of letters and numbers
